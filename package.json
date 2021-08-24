@@ -1,0 +1,25 @@
+{
+  "name": "google_maps",
+  "version": "1.0.0",
+  "description": "google map api",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dookda/google_maps.git"
+  },
+  "keywords": [
+    "gmap"
+  ],
+  "author": "sakda homhuan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dookda/google_maps/issues"
+  },
+  "homepage": "https://github.com/dookda/google_maps#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
