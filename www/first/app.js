@@ -61,10 +61,21 @@ let calcRoute = (latlng) => {
     directionsRenderer = new google.maps.DirectionsRenderer();
     directionsRenderer.setMap(map);
     directionsService = new google.maps.DirectionsService();
-    directionsService.route(request, (result, status) => {
-        console.log(result, status);
-        if (status == 'OK') {
-            directionsRenderer.setDirections(result);
-        }
+
+    // directionsService.route(request, (result, status) => {
+    //     console.log(result, status);
+    //     if (status == 'OK') {
+    //         directionsRenderer.setDirections(result);
+    //     }
+    // })
+    let l = "cisqBupb{Qg@JqGQsIOoCE]AuAAwBIkDMcDGaB@y@?qBIqHQsA…@_B}@_C_AuC_@mA{@mC_@yAa@yAa@eA[w@sCwGeBuD{@iBvBK"
+
+    var decodedPoints = google.maps.geometry.encoding.decodePath(l);
+    console.log(decodedPoints);
+
+    directionsService.route(request).then(res => {
+        directionsRenderer.setDirections(res);
+        const route = res.routes[0];
+        console.log(route);
     })
 }
