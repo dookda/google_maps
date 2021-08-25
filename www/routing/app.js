@@ -1,29 +1,33 @@
+
 let map;
+var directionsService;
+var directionsRenderer;
 
-var directionsService = new google.maps.DirectionsService();
-var directionsRenderer = new google.maps.DirectionsRenderer();
 
-let initMap = () => {
-    let mapOptions = {
+function initMap() {
+
+    map = new google.maps.Map(document.getElementById("map"), {
         center: { lat: 18.781790702300682, lng: 98.97758947595405 },
         zoom: 10,
-        mapTypeId: "satellite",
+        // mapTypeId: "satellite",
         // mapTypeControl: true,
-        mapTypeControlOptions: {
-            style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
-            mapTypeIds: ["roadmap", "satellite", "terrain", "hybrid"],
-            position: google.maps.ControlPosition.TOP_LEFT
-        },
-    }
-    map = new google.maps.Map(document.getElementById("map"), mapOptions);
-    directionsRenderer.setMap(map);
+        // mapTypeControlOptions: {
+        //     style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+        //     mapTypeIds: ["roadmap", "satellite", "terrain", "hybrid"],
+        //     position: google.maps.ControlPosition.TOP_LEFT
+        // },
+    });
 
-    map.addListener("click", (e) => {
-        createMarker(e.latLng.toJSON());
-    })
+    // directionsRenderer = new google.maps.DirectionsRenderer();
+    // directionsRenderer.setMap(map);
+
+    // map.addListener("click", (e) => {
+    //     createMarker(e.latLng.toJSON());
+    // })
 
     // calcRoute()
 }
+// initMap()
 
 let createMarker = (latlng) => {
     console.log(latlng);
@@ -59,7 +63,7 @@ let calcRoute = () => {
         destination: end,
         travelMode: 'DRIVING'
     }
-
+    directionsService = new google.maps.DirectionsService();
     directionsService.route(request, (result, status) => {
         console.log(result, status);
         if (status == 'OK') {
@@ -68,5 +72,4 @@ let calcRoute = () => {
     })
 }
 
-// start
-initMap()
+
