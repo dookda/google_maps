@@ -10,11 +10,30 @@ function initMap() {
 
     });
 
-    map.addListener("click", (e) => {
-        let latlng = e.latLng.toJSON();
-        createMarker(latlng)
-    })
+
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(r => {
+            console.log(r);
+            let end = new google.maps.LatLng({ lat: r.coords.latitude, lng: r.coords.longitude })
+
+            new google.maps.Marker({
+                position: end,
+                map: map
+            })
+
+            map.addListener("click", (e) => {
+                let latlng = e.latLng.toJSON();
+                // createMarker(latlng)
+
+                calcRoute(latlng, end)
+            })
+        })
+    }
 }
+
+
+
 let marker;
 let createMarker = (latlng) => {
     marker ? marker.setMap(null) : null;
@@ -38,14 +57,14 @@ let createMarker = (latlng) => {
     //     map.setCenter(marker.getPosition());
     // });
 
-    calcRoute(latlng);
+    // calcRoute(latlng);
 }
 
 
-let calcRoute = (latlng) => {
-    var start = new google.maps.LatLng({ lat: 18.781790702300682, lng: 98.97758947595405 });
+let calcRoute = (start, end) => {
+    // var start = new google.maps.LatLng({ lat: 18.781790702300682, lng: 98.97758947595405 });
     // var end = new google.maps.LatLng({ lat: 18.77345311226543, lng: 98.98043021647146 });
-    var end = latlng;
+    // var end = latlng;
     var request = {
         origin: start,
         destination: end,
@@ -62,16 +81,9 @@ let calcRoute = (latlng) => {
     directionsRenderer.setMap(map);
     directionsService = new google.maps.DirectionsService();
 
-    // directionsService.route(request, (result, status) => {
-    //     console.log(result, status);
-    //     if (status == 'OK') {
-    //         directionsRenderer.setDirections(result);
-    //     }
-    // })
-    let l = "cisqBupb{Qg@JqGQsIOoCE]AuAAwBIkDMcDGaB@y@?qBIqHQsA…@_B}@_C_AuC_@mA{@mC_@yAa@yAa@eA[w@sCwGeBuD{@iBvBK"
-
-    var decodedPoints = google.maps.geometry.encoding.decodePath(l);
-    console.log(decodedPoints);
+    // let l = "cisqBupb{Qg@JqGQsIOoCE]AuAAwBIkDMcDGaB@y@?qBIqHQsA…@_B}@_C_AuC_@mA{@mC_@yAa@yAa@eA[w@sCwGeBuD{@iBvBK"
+    // var decodedPoints = google.maps.geometry.encoding.decodePath(l);
+    // console.log(decodedPoints);
 
     directionsService.route(request).then(res => {
         directionsRenderer.setDirections(res);
